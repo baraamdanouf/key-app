@@ -130,6 +130,7 @@ class Login extends GetView<LoginController> {
                     textColor: primaryColor),
                   const Spacer(),
                   InkWell(
+                    overlayColor:MaterialStateColor.resolveWith((states) => Colors.transparent),
                     onTap: () {},
                     child: Container(
                       width: 60.w,

@@ -40,6 +40,7 @@ class Home extends GetView<HomeController> {
                      Padding(
                        padding: EdgeInsets.only(right: 12.w, left: 18.w),
                        child: InkWell(
+                           overlayColor:MaterialStateColor.resolveWith((states) => Colors.transparent),
                            onTap: (){ controller.homeKey.currentState!.openDrawer();},
                            child: Icon(Ionicons.menu_sharp, color: Colors.white, size: 35.h,))
                      ),
@@ -93,6 +94,7 @@ class Home extends GetView<HomeController> {
   Widget facultyItem(String? faculty , BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return InkWell(
+      overlayColor:MaterialStateColor.resolveWith((states) => Colors.transparent),
       onTap: (){Get.to(const Sessions());},
       child: SizedBox(
           width: width,

@@ -10,25 +10,33 @@ Widget drawer ()
 {
   return ListView(
       children: <Widget>[
-        DrawerHeader(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(book),
-                    fit: BoxFit.fill)),
-            child: IconButton(
-              alignment: Alignment.topLeft,
-              icon: Icon(
-                Ionicons.person_circle_outline,
-                size: 60.sp,
-                color: primaryColor,
-              ),
-              onPressed: () {
-                Get.back();
-              },
-            )),
+        Padding(
+          padding: EdgeInsets.only(top: 30.h),
+          child: Center(
+            child: Image.asset(
+              logo,
+              // height: 50.h,
+              alignment: Alignment.topCenter,
+              height: 88.h,
+              width: 200.w,
+            ),
+          ),
+        ),
+        CustomText(
+            text: 'اسم المستخدم',
+            fontSize: 18.h,
+            textColor: secondaryColor,
+            bold: true,
+            marginTop: 25.h,
+            alignment: AlignmentDirectional.center),
+        SizedBox(
+          height: 30.h,
+        ),
         ListTile(
+          dense:true,
           title: CustomText(text: 'الرئيسية',
            textColor: textColor,
+              bold: true,
            fontSize: 15.h),
           onTap: () {Get.back();},
           leading: Icon(
@@ -37,48 +45,58 @@ Widget drawer ()
             size: 30.h,
           ),
         ),
-
-        ExpansionTile(
-          title: CustomText(text: 'كلية الطب البشري - جامعة حلب',
-              textColor: textColor,
-              fontSize: 15.h),
-          leading: Icon(
-            Ionicons.flask_outline,
-            color: primaryColor,
-            size: 30.h),
-          children: <Widget>[
-            GestureDetector(
-              child: SizedBox(
-                  width: 250.w,
-                  height: 20.h,
-                  child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Ionicons.school_outline,
-                            size: 20.h,
-                            color: primaryColor,
-                          ),
-                          CustomText(text: 'السنة الخامسة - الفصل الأول',
-                                textColor: textColor,
-                                marginStart: 8.w,
-                                fontSize: 15.h)
-                        ],
-                      ),
-                  )),
-              onTap: () async {
-                // controller.homeKey.currentState!.openEndDrawer();
-                // Get.toNamed(PagesRoutes.personal);
-              },
-            ),
-            SizedBox(height: 12.h)
-          ],
+        Theme(
+          data: Theme.of(Get.context!).copyWith(
+         //   dividerColor: Colors.transparent,
+          iconTheme: IconThemeData(
+            color: Colors.red,
+          )
+          ),
+          child: ExpansionTile(
+            title: CustomText(text: 'كلية الطب البشري - جامعة حلب',
+                textColor: textColor,
+                bold: true,
+                fontSize: 15.h),
+            leading: Icon(
+              Ionicons.flask_outline,
+              color: primaryColor,
+              size: 30.h),
+            children: <Widget>[
+              GestureDetector(
+                child: SizedBox(
+                    width: 250.w,
+                    height: 20.h,
+                    child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Ionicons.school_outline,
+                              size: 20.h,
+                              color: primaryColor,
+                            ),
+                            CustomText(text: 'السنة الخامسة - الفصل الأول',
+                                  textColor: textColor,
+                                   bold: true,
+                                  marginStart: 8.w,
+                                  fontSize: 15.h)
+                          ],
+                        ),
+                    )),
+                onTap: () async {
+                  // controller.homeKey.currentState!.openEndDrawer();
+                  // Get.toNamed(PagesRoutes.personal);
+                },
+              ),
+              SizedBox(height: 12.h)
+            ],
+          ),
         ),
         ExpansionTile(
           title: CustomText(text: 'كلية العلوم - جامعة حلب',
               textColor: textColor,
+              bold: true,
               fontSize: 15.h),
           leading: Icon(
               Ionicons.flask_outline,
@@ -101,6 +119,7 @@ Widget drawer ()
                       CustomText(text: 'السنة الخامسة - الفصل الأول',
                           textColor: textColor,
                           marginStart: 8.w,
+                          bold: true,
                           fontSize: 15.h)
                     ],
                   )),
@@ -112,16 +131,16 @@ Widget drawer ()
             SizedBox(height: 12.h)
           ],
         ),
-
         ListTile(
+          dense:true,
           title: CustomText(text: 'ملاحظاتي',
             textColor: textColor,
-            marginStart: 8.w,
+              bold: true,
             fontSize: 15.h),
           leading: Icon(
             Ionicons.clipboard_outline,
             color: primaryColor,
-            size: 33.sp,
+            size: 30.h,
           ),
           onTap: () {
             // controller.homeKey.currentState!.openEndDrawer();
@@ -129,18 +148,140 @@ Widget drawer ()
           },
         ),
         ListTile(
-          title: CustomText(text: 'تفعيل الكود',
+          dense:true,
+          title: CustomText(text: 'تفعيل كود',
             textColor: textColor,
-            marginStart: 8.w,
+              bold: true,
             fontSize: 15.h),
           leading: Icon(
-            Icons.qr_code_outlined,
+            Ionicons.qr_code_outline,
             color: primaryColor,
-            size: 33.sp),
+            size: 30.h),
           onTap: () {
             // controller.homeKey.currentState!.openEndDrawer();
             // Get.toNamed(PagesRoutes.error);
           },
         ),
+        ListTile(
+          dense:true,
+          title: CustomText(text: 'إدارة الأكواد',
+              textColor: textColor,
+              bold: true,
+              fontSize: 15.h),
+          leading: Icon(
+              Ionicons.card_outline,
+              color: primaryColor,
+              size: 30.h),
+          onTap: () {
+            // controller.homeKey.currentState!.openEndDrawer();
+            // Get.toNamed(PagesRoutes.error);
+          },
+        ),
+        ListTile(
+          dense:true,
+          title: CustomText(text: 'آخر الإشعارات',
+              textColor: textColor,
+              bold: true,
+              fontSize: 15.h),
+          leading: Icon(
+              Ionicons.notifications_outline,
+              color: primaryColor,
+              size: 30.h),
+          onTap: () {
+            // controller.homeKey.currentState!.openEndDrawer();
+            // Get.toNamed(PagesRoutes.error);
+          },
+        ),
+        ListTile(
+          dense:true,
+          title: CustomText(text: 'حول التطبيق',
+              textColor: textColor,
+              bold: true,
+              fontSize: 15.h),
+          leading: Icon(
+              Ionicons.information_outline,
+              color: primaryColor,
+              size: 30.h),
+          onTap: () {
+            // controller.homeKey.currentState!.openEndDrawer();
+            // Get.toNamed(PagesRoutes.error);
+          },
+        ),
+        ListTile(
+          dense:true,
+          title: CustomText(text: 'تواصل معنا',
+              textColor: textColor,
+              bold: true,
+              fontSize: 15.h),
+          leading: Icon(
+              Ionicons.chatbubble_ellipses_outline,
+              color: primaryColor,
+              size: 30.h),
+          onTap: () {
+            // controller.homeKey.currentState!.openEndDrawer();
+            // Get.toNamed(PagesRoutes.error);
+          },
+        ),
+        ListTile(
+          dense:true,
+          title: CustomText(text: 'الإعدادات',
+              textColor: textColor,
+              bold: true,
+              fontSize: 15.h),
+          leading: Icon(
+              Ionicons.settings_outline,
+              color: primaryColor,
+              size: 30.h),
+          onTap: () {
+            // controller.homeKey.currentState!.openEndDrawer();
+            // Get.toNamed(PagesRoutes.error);
+          },
+        ),
+        ListTile(
+          dense:true,
+          title: CustomText(text: 'الوضع الليلي',
+              textColor: textColor,
+              bold: true,
+              fontSize: 15.h),
+          leading: Icon(
+              Ionicons.moon_outline,
+              color: primaryColor,
+              size: 30.h),
+          onTap: () {
+            // controller.homeKey.currentState!.openEndDrawer();
+            // Get.toNamed(PagesRoutes.error);
+          },
+        ),
+        ListTile(
+          dense:true,
+          title: CustomText(text: 'تحديث التطبيق',
+              textColor: textColor,
+              bold: true,
+              fontSize: 15.h),
+          leading: Icon(
+              Ionicons.logo_google_playstore,
+              color: primaryColor,
+              size: 30.h),
+          onTap: () {
+            // controller.homeKey.currentState!.openEndDrawer();
+            // Get.toNamed(PagesRoutes.error);
+          },
+        ),
+        ListTile(
+          dense:true,
+          title: CustomText(text: 'ما الجديد في هذه النسخة',
+              textColor: textColor,
+              bold: true,
+              fontSize: 15.h),
+          leading: Icon(
+              Ionicons.gift_outline,
+              color: primaryColor,
+              size: 30.h),
+          onTap: () {
+            // controller.homeKey.currentState!.openEndDrawer();
+            // Get.toNamed(PagesRoutes.error);
+          },
+        ),
+
 ]);
 }

@@ -390,10 +390,12 @@ class SortQuestions extends GetView<SortQuestionsController> {
               children: [
               Icon(Ionicons.checkmark_circle_outline, size: 33.h),
               Obx(()=> InkWell(
+                  overlayColor:MaterialStateColor.resolveWith((states) => Colors.transparent),
                   onTap: ()=> changeFav(),
                   child: isLiked.value ? Icon(Ionicons.heart, size: 33.h, color: pink):
              Icon(Ionicons.heart_outline, size: 33.h, color: pink))),
               InkWell(
+                  overlayColor:MaterialStateColor.resolveWith((states) => Colors.transparent),
                   onTap: ()
                   {ScaffoldMessenger.of(context).showSnackBar(snackBar);},
                   child: Icon(Ionicons.information_circle_outline, size: 33.h,)),

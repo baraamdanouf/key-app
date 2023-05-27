@@ -79,6 +79,7 @@ class Courses extends GetView<CoursesController> {
   Widget sortItem(String? title, BuildContext context, String? questionNo) {
     final width = MediaQuery.of(context).size.width;
     return InkWell(
+      overlayColor:MaterialStateColor.resolveWith((states) => Colors.transparent),
       onTap: (){
         Get.to(const CourseQuestions());
         },

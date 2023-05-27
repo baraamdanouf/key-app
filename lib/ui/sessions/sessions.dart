@@ -85,6 +85,7 @@ class Sessions extends GetView<SessionsController> {
       String? courseNo,String? date , BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return InkWell(
+      overlayColor:MaterialStateColor.resolveWith((states) => Colors.transparent),
       onTap: (){Get.to(const SessionDetails());},
       child: SizedBox(
         width: width,

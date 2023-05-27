@@ -72,6 +72,7 @@ class SessionDetails extends GetView<SessionDetailsController> {
   Widget courseItem(String? course, String? date , BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return InkWell(
+      overlayColor:MaterialStateColor.resolveWith((states) => Colors.transparent),
       onTap: (){Get.to(const CourseDetails());},
       child: SizedBox(
           width: width,

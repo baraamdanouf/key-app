@@ -125,6 +125,7 @@ class CourseDetails extends GetView<CourseDetailsController> {
   Widget courseItem(String? title, IconData? iconData , BuildContext context, Callback? press) {
     final width = MediaQuery.of(context).size.width;
     return InkWell(
+      overlayColor:MaterialStateColor.resolveWith((states) => Colors.transparent),
       onTap: press,
       child: Container(
         width: width/2 - 25.w,
