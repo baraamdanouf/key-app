@@ -6,6 +6,7 @@ import 'package:key_app/ui/session_details/session_details.dart';
 import 'package:key_app/ui/sessions/session_controller.dart';
 import 'package:key_app/utils/const_colors.dart';
 import 'package:key_app/widget/custom_text.dart';
+import 'package:key_app/widget/drawer.dart';
 
 class Sessions extends GetView<SessionsController> {
   const Sessions({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class Sessions extends GetView<SessionsController> {
     Get.put(SessionsController());
     return Scaffold(
           key: controller.sessionsKey,
+          drawer: Drawer(child: drawer()),
           body: SafeArea(
             child: SizedBox(
               width: width,
@@ -32,7 +34,9 @@ class Sessions extends GetView<SessionsController> {
                       children: [
                         Padding(
                             padding: EdgeInsets.only(right: 12.w, left: 18.w),
-                            child: Icon(Ionicons.menu_sharp, color: Colors.white, size: 35.h,)
+                            child: InkWell(child: Icon(Ionicons.menu_sharp, color: Colors.white, size: 35.h),
+                              onTap: (){ controller.sessionsKey.currentState!.openDrawer();},
+                            )
                         ),
                         CustomText(
                             text: "كلية الطب البشري",

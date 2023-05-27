@@ -6,6 +6,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:key_app/ui/sort_questions/sort_questions_controller.dart';
 import 'package:key_app/utils/const_colors.dart';
 import 'package:key_app/widget/custom_text.dart';
+import 'package:key_app/widget/drawer.dart';
 
 class SortQuestions extends GetView<SortQuestionsController> {
   const SortQuestions({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class SortQuestions extends GetView<SortQuestionsController> {
     Get.put(SortQuestionsController());
     return  Scaffold(
         key: controller.sortQuestionsKey,
+        drawer: Drawer(child: drawer()),
         floatingActionButton: SpeedDial(
               iconTheme: IconThemeData(color: Colors.red),
               curve: Curves.bounceIn,
@@ -58,7 +60,9 @@ class SortQuestions extends GetView<SortQuestionsController> {
                     children: [Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
                            Padding(
                              padding: EdgeInsetsDirectional.only(end: 18.w),
-                             child: Icon(Ionicons.menu_sharp, color: Colors.white, size: 35.h,),
+                             child: InkWell(
+                                 onTap: (){ controller.sortQuestionsKey.currentState!.openDrawer();},
+                                 child: Icon(Ionicons.menu_sharp, color: Colors.white, size: 35.h,)),
                            ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

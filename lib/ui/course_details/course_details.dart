@@ -8,6 +8,7 @@ import 'package:key_app/ui/main_page/main_page.dart';
 import 'package:key_app/ui/main_page/main_page_controller.dart';
 import 'package:key_app/utils/const_colors.dart';
 import 'package:key_app/widget/custom_text.dart';
+import 'package:key_app/widget/drawer.dart';
 
 class CourseDetails extends GetView<CourseDetailsController> {
   const CourseDetails({Key? key}) : super(key: key);
@@ -20,6 +21,7 @@ class CourseDetails extends GetView<CourseDetailsController> {
     Get.put(CourseDetailsController());
     return  Scaffold(
       key: controller.courseDetailsKey,
+      drawer: Drawer(child: drawer()),
       body: SafeArea(
           child: SizedBox(
               width: width,
@@ -34,7 +36,9 @@ class CourseDetails extends GetView<CourseDetailsController> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(right: 12.w, left: 18.w),
-                         child: Icon(Ionicons.menu_sharp, color: Colors.white, size: 35.h,)
+                         child: InkWell(
+                             onTap: (){ controller.courseDetailsKey.currentState!.openDrawer();},
+                             child: Icon(Ionicons.menu_sharp, color: Colors.white, size: 35.h,))
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

@@ -6,6 +6,7 @@ import 'package:key_app/ui/course_details/course_details.dart';
 import 'package:key_app/ui/session_details/session_details_controller.dart';
 import 'package:key_app/utils/const_colors.dart';
 import 'package:key_app/widget/custom_text.dart';
+import 'package:key_app/widget/drawer.dart';
 
 class SessionDetails extends GetView<SessionDetailsController> {
   const SessionDetails({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class SessionDetails extends GetView<SessionDetailsController> {
     Get.put(SessionDetailsController());
     return  Scaffold(
           key: controller.sessionDetailsKey,
+          drawer: Drawer(child: drawer()),
           body: SafeArea(
               child:SizedBox(
                   width: width,
@@ -32,7 +34,9 @@ class SessionDetails extends GetView<SessionDetailsController> {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(right: 12.w, left: 18.w),
-                              child: Icon(Ionicons.menu_sharp, color: Colors.white, size: 35.h,),
+                              child: InkWell(
+                                  onTap: (){ controller.sessionDetailsKey.currentState!.openDrawer();},
+                                  child: Icon(Ionicons.menu_sharp, color: Colors.white, size: 35.h,)),
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,20 +88,11 @@ class SessionDetails extends GetView<SessionDetailsController> {
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 18.w),
-                    // child:
-                    // Container(
-                    //   width: 60.w,
-                    //   height: 60.h,
-                    //   decoration: const BoxDecoration(
-                    //     color: primaryColor,
-                    //     shape: BoxShape.circle,
-                    //   ),
-                      child:
-                      Center(
+                      child: Center(
                         child: Icon(Ionicons.library_outline, color: secondaryColor, size: 35.h,)
                       ),
                     ),
-               //   ),
+
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,

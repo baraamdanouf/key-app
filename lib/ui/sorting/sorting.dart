@@ -6,6 +6,7 @@ import 'package:key_app/ui/sort_questions/sort_questions.dart';
 import 'package:key_app/ui/sorting/sorting_controller.dart';
 import 'package:key_app/utils/const_colors.dart';
 import 'package:key_app/widget/custom_text.dart';
+import 'package:key_app/widget/drawer.dart';
 
 class Sorting extends GetView<SortingController> {
   const Sorting({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class Sorting extends GetView<SortingController> {
     Get.put(SortingController());
     return  Scaffold(
       key: controller.sortingKey,
+      drawer: Drawer(child: drawer()),
       body: SafeArea(
           child: SizedBox(
                 width: width,
@@ -31,7 +33,9 @@ class Sorting extends GetView<SortingController> {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(right: 12.w, left: 18.w),
-                            child: Icon(Ionicons.menu_sharp, color: Colors.white, size: 35.h,),
+                            child: InkWell(
+                                onTap: (){ controller.sortingKey.currentState!.openDrawer();},
+                                child: Icon(Ionicons.menu_sharp, color: Colors.white, size: 35.h,)),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

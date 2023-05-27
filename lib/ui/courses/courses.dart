@@ -6,6 +6,7 @@ import 'package:key_app/ui/course_questions/course_questions.dart';
 import 'package:key_app/ui/courses/courses_controller.dart';
 import 'package:key_app/utils/const_colors.dart';
 import 'package:key_app/widget/custom_text.dart';
+import 'package:key_app/widget/drawer.dart';
 
 class Courses extends GetView<CoursesController> {
   const Courses({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class Courses extends GetView<CoursesController> {
     Get.put(CoursesController());
     return Scaffold(
         key: controller.coursesKey,
+        drawer: Drawer(child: drawer()),
         body: SafeArea(
           child: SizedBox(
             width: width,
@@ -31,7 +33,9 @@ class Courses extends GetView<CoursesController> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(right: 12.w, left: 18.w),
-                        child: Icon(Ionicons.menu_sharp, color: Colors.white, size: 35.h,),
+                        child: InkWell(
+                            onTap: (){ controller.coursesKey.currentState!.openDrawer();},
+                            child: Icon(Ionicons.menu_sharp, color: Colors.white, size: 35.h,)),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:key_app/ui/home/home_controler.dart';
 import 'package:key_app/utils/const_colors.dart';
 import 'package:key_app/utils/const_images.dart';
 import 'package:key_app/widget/custom_text.dart';
+
+import '../ui/home/home.dart';
 
 Widget drawer ()
 {
@@ -15,7 +18,6 @@ Widget drawer ()
           child: Center(
             child: Image.asset(
               logo,
-              // height: 50.h,
               alignment: Alignment.topCenter,
               height: 88.h,
               width: 200.w,
@@ -38,21 +40,16 @@ Widget drawer ()
            textColor: textColor,
               bold: true,
            fontSize: 15.h),
-          onTap: () {Get.back();},
+          onTap: () {
+            Get.back();
+            Get.to(const Home());},
           leading: Icon(
             Ionicons.home_outline,
             color: primaryColor,
             size: 30.h,
           ),
         ),
-        Theme(
-          data: Theme.of(Get.context!).copyWith(
-         //   dividerColor: Colors.transparent,
-          iconTheme: IconThemeData(
-            color: Colors.red,
-          )
-          ),
-          child: ExpansionTile(
+      ExpansionTile(
             title: CustomText(text: 'كلية الطب البشري - جامعة حلب',
                 textColor: textColor,
                 bold: true,
@@ -92,7 +89,6 @@ Widget drawer ()
               SizedBox(height: 12.h)
             ],
           ),
-        ),
         ExpansionTile(
           title: CustomText(text: 'كلية العلوم - جامعة حلب',
               textColor: textColor,
