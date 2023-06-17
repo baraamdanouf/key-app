@@ -93,7 +93,7 @@ class Login extends GetView<LoginController> {
                         if (!isValid) {
                           return;
                         } else {
-                          await controller.performPostRequest('Is2BhLeQueR0kiQtG28VreBe');
+                          await controller.createAccount('Is2BhLeQueR0kiQtG28VreBe');
                         }
                         controller.loginFormKey.currentState!.save();
                       },
