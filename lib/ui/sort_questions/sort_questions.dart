@@ -336,6 +336,7 @@ class SortQuestions extends GetView<SortQuestionsController> {
         onPressed: () {},),
       content: CustomText(
         text: 'صمم استقبالي' ,
+          fontFamily: 'Almarai',
         fontSize: 18.h,
         textColor: MainController.themeData.value.dividerColor),
 

@@ -93,7 +93,8 @@ class Login extends GetView<LoginController> {
                         if (!isValid) {
                           return;
                         } else {
-                          await controller.checkCode('Is2BhLeQueR0kiQtG28VreBe');
+                          //'Is2BhLeQueR0kiQtG28VreBe'
+                          await controller.checkCode(controller.controllerCode.text);
                         }
                         controller.loginFormKey.currentState!.save();
                       },

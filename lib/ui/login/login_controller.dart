@@ -2,9 +2,13 @@ import 'dart:convert';
 
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:key_app/main_controller.dart';
 import 'package:key_app/ui/home/home.dart';
+import 'package:key_app/utils/const_colors.dart';
+import 'package:key_app/widget/custom_text.dart';
 
 class LoginController extends GetxController {
   final GlobalKey<ScaffoldState> loginKey = GlobalKey<ScaffoldState>();
@@ -27,7 +31,19 @@ class LoginController extends GetxController {
 
   Future<void> checkCode(String userId) async {
     var url = Uri.parse('https://jalabdev.online/keyApp/post/checkCode.php');
+    final snackBar = SnackBar(
+      backgroundColor: secondaryColor,
+      duration: const Duration(seconds: 5),
+      action: SnackBarAction(label: 'إخفاء',
+        textColor: yellow,
+        onPressed: () {},),
+      content: CustomText(
+          text: 'الكود خاطىء' ,
+          fontSize: 18.h,
+          fontFamily: 'Almarai',
+          textColor: MainController.themeData.value.dividerColor),
 
+    );
     var headers = <String, String>{
       'Content-Type': 'application/x-www-form-urlencoded',
     };
@@ -45,6 +61,7 @@ class LoginController extends GetxController {
 
     } else {
       // Request failed
+      ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
       print('Request failed with status code: ${response.statusCode}');
     }
   }

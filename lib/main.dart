@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get/get.dart';
 import 'package:key_app/main_controller.dart';
-import 'package:key_app/ui/home/home.dart';
 import 'package:key_app/ui/splash/splash.dart';
 import 'package:key_app/utils/const_colors.dart';
 import 'utils/shared_preferance/shared_preferance.dart';

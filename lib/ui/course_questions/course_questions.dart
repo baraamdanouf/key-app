@@ -379,6 +379,7 @@ class CourseQuestions extends GetView<CourseQuestionsController> {
       content: CustomText(
           text: 'صمم استقبالي' ,
           fontSize: 18.h,
+          fontFamily: 'Almarai',
           textColor:  MainController.themeData.value.dividerColor),
 
     );
