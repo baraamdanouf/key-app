@@ -25,7 +25,7 @@ class LoginController extends GetxController {
     print('Running on ${androidInfo.androidId}');
   }
 
-  Future<void> createAccount(String userId) async {
+  Future<void> checkCode(String userId) async {
     var url = Uri.parse('https://jalabdev.online/keyApp/post/checkCode.php');
 
     var headers = <String, String>{
