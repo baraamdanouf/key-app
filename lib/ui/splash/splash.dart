@@ -23,13 +23,11 @@ class Splash extends GetView<SplashController> {
           width: width,
           child: Center(
             child: Image.asset(logoSplash,
-                    height: 200.h,
-                    width: 400.w,
-                    alignment: Alignment.center),
+                height: 250.h,
+                width: 400.w,
+            ))
           ),
-
         ),
-      ),
     );
   }
 }

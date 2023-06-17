@@ -5,23 +5,24 @@ import 'package:ionicons/ionicons.dart';
 import 'package:key_app/main_controller.dart';
 import 'package:key_app/ui/course_questions/course_questions.dart';
 import 'package:key_app/ui/courses/courses_controller.dart';
+import 'package:key_app/ui/interviews/interviews_controller.dart';
 import 'package:key_app/utils/const_colors.dart';
 import 'package:key_app/widget/custom_text.dart';
 import 'package:key_app/widget/drawer.dart';
 
-class Courses extends GetView<CoursesController> {
-  const Courses({Key? key}) : super(key: key);
+class Interviews extends GetView<InterviewsController> {
+  const Interviews({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    Get.put(CoursesController());
-    return Scaffold(
-        key: controller.coursesKey,
-        drawer: Drawer(child: drawer()),
-        body: Obx(()=> SafeArea(
+    Get.put(InterviewsController());
+    return Obx(()=> Scaffold(
+          key: controller.interviewsKey,
+          drawer: Drawer(child: drawer()),
+          body: SafeArea(
             child: SizedBox(
               width: width,
               child: Column(
@@ -35,9 +36,8 @@ class Courses extends GetView<CoursesController> {
                         Padding(
                           padding: EdgeInsets.only(right: 12.w, left: 18.w),
                           child: InkWell(
-                              onTap: (){ controller.coursesKey.currentState!.openDrawer();},
-                              child: Icon(Ionicons.menu_sharp,
-                                color: MainController.themeData.value.dividerColor, size: 35.h,)),
+                              onTap: (){ controller.interviewsKey.currentState!.openDrawer();},
+                              child: Icon(Ionicons.menu_sharp, color: MainController.themeData.value.dividerColor, size: 35.h,)),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +50,7 @@ class Courses extends GetView<CoursesController> {
                                 alignment: AlignmentDirectional.center,
                                 textColor: MainController.themeData.value.dividerColor),
                             CustomText(
-                                text: "الدورات (8)",
+                                text: "المقابلات (8)",
                                 fontSize: 15.h,
                                 marginTop: 8.h,
                                 alignment: AlignmentDirectional.center,
@@ -65,13 +65,13 @@ class Courses extends GetView<CoursesController> {
                             padding: EdgeInsetsDirectional.only(top: 8.h, bottom: 15.h),
                             child: Column(
                               children: [
-                                sortItem('دورة 2020 - 2021, الفصل الأول', context, '50'),
-                                sortItem('دورة 2020 - 2021, الفصل الثاني', context, '8'),
-                                sortItem('دورة 2021 - 2022, الفصل الأول', context, '10'),
-                                sortItem('دورة 2021 -2022, الفصل الثاني', context, '15'),
-                                sortItem('دورة 2020 - 2021, الفصل الأول', context, '50'),
-                                sortItem('دورة 2020 - 2021, الفصل الأول', context, '50'),
-                                sortItem('دورة 2020 - 2021, الفصل الأول', context, '50')
+                                interviewItem('دورة 2020 - 2021, الفصل الأول', context, '50', '10/6/2020'),
+                                interviewItem('دورة 2020 - 2021, الفصل الثاني', context, '8','10/6/2020'),
+                                interviewItem('دورة 2021 - 2022, الفصل الأول', context, '10', '10/6/2020'),
+                                interviewItem('دورة 2021 -2022, الفصل الثاني', context, '15', '10/6/2020'),
+                                interviewItem('دورة 2020 - 2021, الفصل الأول', context, '50', '10/6/2020'),
+                                interviewItem('دورة 2020 - 2021, الفصل الأول', context, '50', '10/6/2020'),
+                                interviewItem('دورة 2020 - 2021, الفصل الأول', context, '50', '10/6/2020')
                               ],
                             ))
                     ),
@@ -79,27 +79,30 @@ class Courses extends GetView<CoursesController> {
                 ],
               ),
             ),
-          ),
-        )
+          )
+      ),
     );
   }
-  Widget sortItem(String? title, BuildContext context, String? questionNo) {
+  Widget interviewItem(String? title, BuildContext context, String? questionNo, String? date) {
     final width = MediaQuery.of(context).size.width;
     return InkWell(
       overlayColor:MaterialStateColor.resolveWith((states) => Colors.transparent),
-      onTap: (){
-        Get.to(const CourseQuestions());
-        },
+      onTap: (){},
       child: SizedBox(
         width: width,
-        child: Column(
+        child:
+        Column(
           children: [
-            Row(crossAxisAlignment: CrossAxisAlignment.center,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 18.w),
-                    child: Icon(Ionicons.document_outline, size: 30.h,
-                        color: MainController.themeData.value.hintColor)),
+                  padding: EdgeInsets.symmetric(horizontal: 18.w),
+                  child: Center(
+                      child: Icon(Ionicons.newspaper_outline, color: MainController.themeData.value.hintColor, size: 35.h,)
+                  ),
+                ),
+
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,30 +113,21 @@ class Courses extends GetView<CoursesController> {
                         bold: true,
                         marginBottom: 12.h,
                         marginTop: 8.h,
+                        textColor:MainController.themeData.value.indicatorColor),
+                    CustomText(
+                        text: 'عدد الأسئلة: $questionNo',
+                        fontSize: 16.h,
                         textColor: MainController.themeData.value.indicatorColor),
-                    Row(children: [
-                      CustomText(
-                          text: 'عدد الأسئلة :',
-                          fontSize: 15.h,
-                          textColor: MainController.themeData.value.indicatorColor),
-                      CustomText(
-                          text: '$questionNo',
-                          fontSize: 15.h,
-                          textColor: MainController.themeData.value.indicatorColor),
 
-                    ],)
                   ],),
+
                 const Spacer(),
-                Center(
-                  child: Container(
-                    width: 20.w,
-                    height: 20.h,
-                    margin: EdgeInsetsDirectional.only(end: 12.w),
-                    decoration: const BoxDecoration(
-                        color: secondaryColor,
-                        shape: BoxShape.circle
-                    ),
-                  ),
+                Align(
+                  child: CustomText(
+                      text: "$date",
+                      fontSize: 18.h,
+                      marginEnd: 12.w,
+                      textColor: MainController.themeData.value.indicatorColor),
                 ),
               ],
             ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:key_app/main_controller.dart';
 import 'package:key_app/utils/const_colors.dart';
 
 //This Class to create custom button.
@@ -44,9 +46,7 @@ class CustomButton extends StatelessWidget {
                 color: borderColor != null ? borderColor! : Colors.transparent,
                 width: widthBorder != null ? widthBorder! : 0,
               ))),
-          backgroundColor: backgroundColor != null
-              ? MaterialStateProperty.all(backgroundColor)
-              : MaterialStateProperty.all(Colors.transparent),
+          backgroundColor: MaterialStateProperty.all(MainController.themeData.value.primaryColor)
         ),
         child: Text(
           text ?? "",

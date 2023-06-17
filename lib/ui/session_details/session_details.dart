@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:key_app/main_controller.dart';
 import 'package:key_app/ui/course_details/course_details.dart';
 import 'package:key_app/ui/session_details/session_details_controller.dart';
 import 'package:key_app/utils/const_colors.dart';
@@ -20,57 +21,57 @@ class SessionDetails extends GetView<SessionDetailsController> {
     return  Scaffold(
           key: controller.sessionDetailsKey,
           drawer: Drawer(child: drawer()),
-          body: SafeArea(
-              child:SizedBox(
-                  width: width,
-                  height : height,
-                  child: Column(
-                    children: [
-                      Container(
-                        width: width, height: 85.h,color: primaryColor,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(right: 12.w, left: 18.w),
-                              child: InkWell(
-                                  onTap: (){ controller.sessionDetailsKey.currentState!.openDrawer();},
-                                  child: Icon(Ionicons.menu_sharp, color: Colors.white, size: 35.h,)),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CustomText(
-                                    text: "السنة الخامسة - الفصل الأول",
-                                    fontSize: 20.h,
-                                    bold: true,
-                                    //   textAlign: TextAlign.center,
-                                    alignment: AlignmentDirectional.center,
-                                    textColor: Colors.white),
-                                CustomText(
-                                    text: "كلية الطب البشري - جامعة حلب",
-                                    fontSize: 15.h,
-                                    marginTop: 8.h,
-                                    //   textAlign: TextAlign.center,
-                                    alignment: AlignmentDirectional.center,
-                                    textColor: Colors.white),
-                              ],
-                            ),
-                          ],),),
-                      SizedBox(height: 8.h,),
-                      courseItem('أطفال 1','10/6/2020', context) ,
-                      courseItem('أمراض العين وجراحتها','10/6/2020', context),
-                      courseItem('الأمراض النسائية','10/6/2020', context) ,
-                      courseItem('الطب الوقائي','10/6/2020', context),
-                      courseItem('جراحة عصبية وبولية','10/6/2020', context) ,
-                      courseItem('داخلية عصبية','10/6/2020', context)
+          body: Obx(()=> SafeArea(
+                child:SizedBox(
+                    width: width,
+                    height : height,
+                    child: Column(
+                      children: [
+                        Container(
+                          width: width, height: 85.h,color: MainController.themeData.value.primaryColor,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(right: 12.w, left: 18.w),
+                                child: InkWell(
+                                    onTap: (){ controller.sessionDetailsKey.currentState!.openDrawer();},
+                                    child: Icon(Ionicons.menu_sharp,
+                                      color: MainController.themeData.value.dividerColor, size: 35.h,)),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CustomText(
+                                      text: "السنة الخامسة - الفصل الأول",
+                                      fontSize: 20.h,
+                                      bold: true,
+                                      alignment: AlignmentDirectional.center,
+                                      textColor: MainController.themeData.value.dividerColor),
+                                  CustomText(
+                                      text: "كلية الطب البشري - جامعة حلب",
+                                      fontSize: 15.h,
+                                      marginTop: 8.h,
+                                      alignment: AlignmentDirectional.center,
+                                      textColor: MainController.themeData.value.dividerColor),
+                                ],
+                              ),
+                            ],),),
+                        SizedBox(height: 8.h,),
+                        courseItem('أطفال 1','10/6/2020', context) ,
+                        courseItem('أمراض العين وجراحتها','10/6/2020', context),
+                        courseItem('الأمراض النسائية','10/6/2020', context) ,
+                        courseItem('الطب الوقائي','10/6/2020', context),
+                        courseItem('جراحة عصبية وبولية','10/6/2020', context) ,
+                        courseItem('داخلية عصبية','10/6/2020', context)
 
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
+          ),
     );
   }
   Widget courseItem(String? course, String? date , BuildContext context) {
@@ -89,7 +90,7 @@ class SessionDetails extends GetView<SessionDetailsController> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 18.w),
                       child: Center(
-                        child: Icon(Ionicons.library_outline, color: secondaryColor, size: 35.h,)
+                        child: Icon(Ionicons.library_outline, color: MainController.themeData.value.hintColor, size: 35.h,)
                       ),
                     ),
 
@@ -103,29 +104,29 @@ class SessionDetails extends GetView<SessionDetailsController> {
                           bold: true,
                           marginBottom: 12.h,
                           marginTop: 8.h,
-                          textColor: Colors.black),
+                          textColor: MainController.themeData.value.indicatorColor),
                       Row(children: [
-                        Icon(Ionicons.document_outline, color: textColor, size: 18.h,),
+                        Icon(Ionicons.document_outline, color: MainController.themeData.value.hintColor, size: 18.h,),
                         CustomText(
                             text: '9',
                             fontSize: 15.h,
                             marginEnd: 8.h,
                             marginStart: 8.h,
-                            textColor: textColor),
-                        Icon(Ionicons.briefcase_outline, color: textColor, size: 18.h,),
+                            textColor: MainController.themeData.value.indicatorColor),
+                        Icon(Ionicons.briefcase_outline, color: MainController.themeData.value.hintColor, size: 18.h,),
                         CustomText(
                             text: '14',
                             fontSize: 15.h,
                             marginEnd: 8.h,
                             marginStart: 8.h,
-                            textColor: textColor),
-                        Icon(Ionicons.receipt_outline, color: textColor, size: 18.h,),
+                            textColor: MainController.themeData.value.indicatorColor),
+                        Icon(Ionicons.newspaper_outline, color: MainController.themeData.value.hintColor, size: 18.h,),
                         CustomText(
                             text: '14',
                             fontSize: 15.h,
                             marginEnd: 8.h,
                             marginStart: 8.h,
-                            textColor: textColor),
+                            textColor: MainController.themeData.value.indicatorColor),
                       ],)
                     ],),
                   const Spacer(),
@@ -134,11 +135,11 @@ class SessionDetails extends GetView<SessionDetailsController> {
                         text: "$date",
                         fontSize: 18.h,
                         marginEnd: 12.w,
-                        textColor: textColor),
+                        textColor: MainController.themeData.value.indicatorColor),
                   ),
                 ],
               ),
-              const Divider(thickness: 0.8,color: textColor)
+               Divider(thickness: 0.8,color: MainController.themeData.value.indicatorColor.withOpacity(0.5))
             ],
           ),
         ),

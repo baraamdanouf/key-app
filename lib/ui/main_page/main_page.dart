@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:key_app/main_controller.dart';
 import 'package:key_app/ui/courses/courses.dart';
+import 'package:key_app/ui/interviews/interviews.dart';
 import 'package:key_app/ui/main_page/main_page_controller.dart';
 import 'package:key_app/ui/sorting/sorting.dart';
 import 'package:key_app/utils/const_colors.dart';
+import 'package:key_app/utils/shared_preferance/shared_preferance.dart';
 
 
 class MainPage extends GetView<MainPageController> {
@@ -17,7 +20,7 @@ class MainPage extends GetView<MainPageController> {
       Courses(),
       Center(child: Text('h3'),),
       Sorting(),
-      Center(child: Text('h4'),),
+      Interviews()
     ];
 
     Get.put(MainPageController());
@@ -31,9 +34,9 @@ class MainPage extends GetView<MainPageController> {
                 ),
                 child:
               BottomNavigationBar(
-                  backgroundColor:greyLite,
+                  backgroundColor: SaveDateInSharedPreference.getTheming() ? const Color(0xffacabab) : greyLite,
                   type: BottomNavigationBarType.fixed,
-                  selectedItemColor: primaryColor,
+                  selectedItemColor: MainController.themeData.value.primaryColor,
                   unselectedItemColor: textColor,
                   showUnselectedLabels: false,
                   selectedLabelStyle: TextStyle(fontSize: 14.h, fontWeight: FontWeight.w600),
@@ -47,7 +50,7 @@ class MainPage extends GetView<MainPageController> {
                    ), label: 'الدورات', ),
                    BottomNavigationBarItem(icon:Icon(Ionicons.briefcase_outline), label: 'البنوك'),
                    BottomNavigationBarItem(icon:Icon(Ionicons.pricetags_outline), label:'التصنيفات'),
-                  BottomNavigationBarItem(icon:Icon(Ionicons.receipt_outline),
+                  BottomNavigationBarItem(icon:Icon(Ionicons.newspaper_outline),
                       label: 'المقابلات',
                   )],
             ),

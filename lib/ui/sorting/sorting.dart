@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:key_app/main_controller.dart';
 import 'package:key_app/ui/sort_questions/sort_questions.dart';
 import 'package:key_app/ui/sorting/sorting_controller.dart';
 import 'package:key_app/utils/const_colors.dart';
@@ -17,68 +18,69 @@ class Sorting extends GetView<SortingController> {
     final height = MediaQuery.of(context).size.height;
 
     Get.put(SortingController());
-    return  Scaffold(
-      key: controller.sortingKey,
-      drawer: Drawer(child: drawer()),
-      body: SafeArea(
-          child: SizedBox(
-                width: width,
-                child: Column(
-                  children: [
-                    Container(
-                      width: width, height: 85.h,color: primaryColor,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(right: 12.w, left: 18.w),
-                            child: InkWell(
-                                onTap: (){ controller.sortingKey.currentState!.openDrawer();},
-                                child: Icon(Ionicons.menu_sharp, color: Colors.white, size: 35.h,)),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CustomText(
-                                  text: "أطفال 1",
-                                  fontSize: 20.h,
-                                  bold: true,
-                                  alignment: AlignmentDirectional.center,
-                                  textColor: Colors.white),
-                              CustomText(
-                                  text: "التصنيفات (8)",
-                                  fontSize: 15.h,
-                                  marginTop: 8.h,
-                                  alignment: AlignmentDirectional.center,
-                                  textColor: Colors.white),
-                            ],
-                          ),
-                        ],),),
-                  //  SizedBox(height: 15.h,),
-                     Expanded(
-                       child: SingleChildScrollView(
-                         child:  Container(
-                               padding: EdgeInsetsDirectional.only(top: 8.h, bottom: 15.h),
-                              child: Column(
-                                children: [
-                                  sortItem('اللقاحات', context, '50', '10'),
-                                  sortItem('اللقاحات', context, '50', '10'),
-                                  sortItem('اللقاحات', context, '50', '10'),
-                                  sortItem('اللقاحات', context, '50', '10'),
-                                  sortItem('اللقاحات', context, '50', '10'),
-                                  sortItem('اللقاحات', context, '50', '10'),
-                                  sortItem('اللقاحات', context, '50', '10'),
-                                  sortItem('اللقاحات', context, '50', '10')
-                                ],
-                              ))
+    return Obx(()=> Scaffold(
+        key: controller.sortingKey,
+        drawer: Drawer(child: drawer()),
+        body: SafeArea(
+            child: SizedBox(
+                  width: width,
+                  child: Column(
+                    children: [
+                      Container(
+                        width: width, height: 85.h,color: MainController.themeData.value.primaryColor,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: 12.w, left: 18.w),
+                              child: InkWell(
+                                  onTap: (){ controller.sortingKey.currentState!.openDrawer();},
+                                  child: Icon(Ionicons.menu_sharp, color: MainController.themeData.value.dividerColor, size: 35.h,)),
                             ),
-                       ),
-                  ],
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CustomText(
+                                    text: "أطفال 1",
+                                    fontSize: 20.h,
+                                    bold: true,
+                                    alignment: AlignmentDirectional.center,
+                                    textColor: MainController.themeData.value.dividerColor),
+                                CustomText(
+                                    text: "التصنيفات (8)",
+                                    fontSize: 15.h,
+                                    marginTop: 8.h,
+                                    alignment: AlignmentDirectional.center,
+                                    textColor: MainController.themeData.value.dividerColor),
+                              ],
+                            ),
+                          ],),),
+                    //  SizedBox(height: 15.h,),
+                       Expanded(
+                         child: SingleChildScrollView(
+                           child:  Container(
+                                 padding: EdgeInsetsDirectional.only(top: 8.h, bottom: 15.h),
+                                child: Column(
+                                  children: [
+                                    sortItem('اللقاحات', context, '50', '10'),
+                                    sortItem('اللقاحات', context, '50', '10'),
+                                    sortItem('اللقاحات', context, '50', '10'),
+                                    sortItem('اللقاحات', context, '50', '10'),
+                                    sortItem('اللقاحات', context, '50', '10'),
+                                    sortItem('اللقاحات', context, '50', '10'),
+                                    sortItem('اللقاحات', context, '50', '10'),
+                                    sortItem('اللقاحات', context, '50', '10')
+                                  ],
+                                ))
+                              ),
+                         ),
+                    ],
+                  ),
                 ),
-              ),
-            )
+              )
+      ),
     );
   }
   Widget sortItem(String? title, BuildContext context, String? questionNo, String? bankNo) {
@@ -94,7 +96,8 @@ class Sorting extends GetView<SortingController> {
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 18.w),
-                  child:  Icon(Ionicons.pricetags_outline, size: 30.h, color: secondaryColor)),
+                  child:  Icon(Ionicons.pricetags_outline, size: 30.h,
+                      color: MainController.themeData.value.hintColor)),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,25 +108,25 @@ class Sorting extends GetView<SortingController> {
                         bold: true,
                         marginBottom: 12.h,
                         marginTop: 8.h,
-                        textColor: Colors.black),
+                        textColor: MainController.themeData.value.indicatorColor),
                     Row(children: [
                       CustomText(
                           text: 'عدد أسئلة الدورات :',
                           fontSize: 15.h,
-                          textColor: textColor),
+                          textColor: MainController.themeData.value.indicatorColor),
                       CustomText(
                           text: '$questionNo',
                           fontSize: 15.h,
-                          textColor: textColor),
+                          textColor: MainController.themeData.value.indicatorColor),
                       CustomText(
                           text: 'عدد أسئلة البنوك :',
                           fontSize: 15.h,
                           marginStart: 8.h,
-                          textColor: textColor),
+                          textColor: MainController.themeData.value.indicatorColor),
                       CustomText(
                           text: '$bankNo',
                           fontSize: 15.h,
-                          textColor: textColor),
+                          textColor: MainController.themeData.value.indicatorColor),
                     ],)
                   ],),
                 const Spacer(),
