@@ -6,20 +6,22 @@ import 'package:key_app/main_controller.dart';
 import 'package:key_app/ui/session_details/session_details.dart';
 import 'package:key_app/ui/sessions/session_controller.dart';
 import 'package:key_app/utils/const_colors.dart';
+import 'package:key_app/widget/cuatom_button.dart';
 import 'package:key_app/widget/custom-shimmer-widget.dart';
 import 'package:key_app/widget/custom_text.dart';
 import 'package:key_app/widget/drawer.dart';
 
 class Sessions extends GetView<SessionsController> {
   final int facultyId;
-  const Sessions({Key? key, required this.facultyId}) : super(key: key);
+  final String faculty;
+  const Sessions({Key? key, required this.facultyId, required this.faculty}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    Get.put(SessionsController(facultyId: facultyId));
+    Get.put(SessionsController(facultyId: facultyId, faculty: faculty));
     return Scaffold(
           key: controller.sessionsKey,
           drawer: Drawer(child: drawer()),
@@ -99,7 +101,10 @@ class Sessions extends GetView<SessionsController> {
                             itemCount: controller.facultyYears.length,
                             padding: EdgeInsetsDirectional.only(top: 8.h, bottom: 8.h),
                             itemBuilder: (context, index)=>
-                        sessionItem(controller.facultyYears[index], 'كلية ${Get.arguments['faculty']}', '7','10/6/2020', context)),
+                           sessionItem(controller.facultyYears[index].name,
+                               'كلية ${Get.arguments['faculty']}', '7','10/6/2020', context,
+                             controller.facultyYears[index].id,
+                           )),
                       ),
                     )
                   ],
@@ -110,10 +115,71 @@ class Sessions extends GetView<SessionsController> {
     );
   }
   Widget sessionItem(String? yearSession,String? faculty ,
-      String? courseNo,String? date , BuildContext context) {
+      String? courseNo,String? date , BuildContext context, String sessionId) {
     final width = MediaQuery.of(context).size.width;
     return InkWell(overlayColor:MaterialStateColor.resolveWith((states) => Colors.transparent),
-      onTap: (){Get.to(const SessionDetails());},
+      onTap: (){
+     // Get.to(const SessionDetails());
+      Get.dialog(AlertDialog(
+        backgroundColor: MainController.themeData.value.dividerColor,
+        content: Container(
+          height: 225.h,
+          width: 340.w,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              CustomText(
+                text: 'هل تريد حقًا عرض الدورات والأسئلة الخاصة بهذا الفصل الدراسي؟',
+                textColor: Colors.black,
+                alignment: AlignmentDirectional.center,
+                textAlign: TextAlign.center,
+                fontSize: 18.h,
+                bold: true,
+              ),
+              CustomText(
+                text: 'بمجرد الضغط على زر موافق، يتم عرض دورات وأسئلة هذا الفصل ولا ويمكنك تغيير الفصل الدراسي إلا بتغيير الكود',
+                textColor: Colors.black54,
+                fontSize: 15.h,
+                alignment: AlignmentDirectional.center,
+                heightText: 2.h,
+                textAlign: TextAlign.center,
+                bold: true,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomButton(
+                    onPressed: () async{
+                      print(sessionId);
+                    await controller.registerUser(sessionId, yearSession!);
+                    },
+                    text: "موافق",
+                    textColor: Colors.black,
+                    borderColor: Colors.black,
+                    border: 20.r,
+                    backgroundColor: MainController.themeData.value.dividerColor,
+                    textSize: 14.h,
+                    width: 88.w,
+                    //   height: 33.h,
+                    bold: true,
+                  ),
+                  CustomButton(
+                    text: "إلغاء",
+                    bold: true,
+                    textColor: Colors.black54,
+                    border: 20.r,
+                    width: 88.w,
+                    textSize: 14.h,
+                    backgroundColor: Colors.transparent,
+                    widthBorder: 1.w, onPressed: () {Get.back();},
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+      ));
+      },
       child: SizedBox(
         width: width,
         child: Column(

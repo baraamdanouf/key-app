@@ -54,8 +54,7 @@ class OnBoarding extends GetView<OnBoardingController> {
                         border: 5.r,
                         height: 55.h,
                         textSize: 18.h,
-                        bold: true,
-                        backgroundColor: primaryColor),
+                        bold: true,),
                     SizedBox(height: 8.h),
                     CustomText(
                         text: "تحتاج لمساعدة ؟ ",

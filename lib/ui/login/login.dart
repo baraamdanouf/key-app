@@ -3,19 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:key_app/main_controller.dart';
-import 'package:key_app/ui/Home/home.dart';
 import 'package:key_app/ui/login/login_controller.dart';
 import 'package:key_app/utils/const_images.dart';
+import 'package:key_app/utils/shared_preferance/shared_preferance.dart';
 import 'package:key_app/widget/cuatom_button.dart';
 import 'package:key_app/widget/custom_text.dart';
 
-//Login page creation and binding with getx controller.
 class Login extends GetView<LoginController> {
   const Login({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    //Get width and height of the screen.
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
@@ -73,7 +71,7 @@ class Login extends GetView<LoginController> {
                                 fontSize: 16.h,
                                 fontWeight: FontWeight.w500),
                           ),
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.text,
                           controller: controller.controllerCode,
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -93,8 +91,10 @@ class Login extends GetView<LoginController> {
                         if (!isValid) {
                           return;
                         } else {
-                          //'Is2BhLeQueR0kiQtG28VreBe'
                           await controller.checkCode(controller.controllerCode.text);
+                          SaveDateInSharedPreference.setToken(controller.controllerCode.text);
+                          print(controller.controllerCode.text);
+                         //ukwkn2OzHMttjP34jO2FyGBc
                         }
                         controller.loginFormKey.currentState!.save();
                       },

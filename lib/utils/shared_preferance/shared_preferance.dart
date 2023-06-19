@@ -4,11 +4,18 @@ class SaveDateInSharedPreference
 {
   static late SharedPreferences sharedPreferences;
 
+  static const keyToken = 'TOKEN';
   static const keyTheming = 'DARK_THEME';
   static const keySearch = 'SEARCH_LIST';
   static const keyWishlist = 'WISH_LIST';
 
   static Future init() async => sharedPreferences = await SharedPreferences.getInstance();
+
+  //region token
+  static Future setToken (String token) async => await sharedPreferences.setString(keyToken, token);
+
+  static String getToken () => sharedPreferences.getString(keyToken) ?? '';
+  //endregion token
 
   //region change theming
   static Future setTheming (bool darkTheme) async => await sharedPreferences.setBool(keyTheming, darkTheme);

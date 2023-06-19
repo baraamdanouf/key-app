@@ -118,7 +118,7 @@ class Home extends GetView<HomeController> {
     final width = MediaQuery.of(context).size.width;
     return InkWell(
       overlayColor:MaterialStateColor.resolveWith((states) => Colors.transparent),
-      onTap: (){Get.to(Sessions(facultyId: id),arguments: {'faculty': faculty});},
+      onTap: (){Get.to(Sessions(facultyId: id, faculty: faculty!),arguments: {'faculty': faculty});},
       child: SizedBox(
           width: width,
           child: Column(

@@ -46,7 +46,7 @@ class CustomButton extends StatelessWidget {
                 color: borderColor != null ? borderColor! : Colors.transparent,
                 width: widthBorder != null ? widthBorder! : 0,
               ))),
-          backgroundColor: MaterialStateProperty.all(MainController.themeData.value.primaryColor)
+          backgroundColor: MaterialStateProperty.all(backgroundColor ?? MainController.themeData.value.primaryColor)
         ),
         child: Text(
           text ?? "",
