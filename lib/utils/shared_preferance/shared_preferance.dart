@@ -5,6 +5,7 @@ class SaveDateInSharedPreference
   static late SharedPreferences sharedPreferences;
 
   static const keyToken = 'TOKEN';
+  static const keyUserName = 'USER_NAME';
   static const keyTheming = 'DARK_THEME';
   static const keySearch = 'SEARCH_LIST';
   static const keyWishlist = 'WISH_LIST';
@@ -16,6 +17,12 @@ class SaveDateInSharedPreference
 
   static String getToken () => sharedPreferences.getString(keyToken) ?? '';
   //endregion token
+
+  //region user name
+  static Future setUserName (String userName) async => await sharedPreferences.setString(keyUserName, userName);
+
+  static String getUserName () => sharedPreferences.getString(keyUserName) ?? '';
+  //endregion user name
 
   //region change theming
   static Future setTheming (bool darkTheme) async => await sharedPreferences.setBool(keyTheming, darkTheme);

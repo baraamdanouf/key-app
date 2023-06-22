@@ -47,7 +47,7 @@ Widget drawer ()
             ),
           ),
           CustomText(
-              text: 'أحمد زكريا حجار',
+              text: SaveDateInSharedPreference.getUserName(),
               fontSize: 18.h,
               textColor: MainController.themeData.value.buttonColor,
               bold: true,

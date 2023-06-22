@@ -1,9 +1,7 @@
-import 'dart:convert';
-
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:key_app/models/FacultyYear.dart';
+import 'package:key_app/models/faculty_year_model.dart';
 import 'package:key_app/services/remote_services.dart';
 import 'package:http/http.dart' as http;
 import 'package:key_app/ui/session_details/session_details.dart';
@@ -57,7 +55,7 @@ class SessionsController extends GetxController {
 
     if (response.statusCode == 200) {
       // Request succeeded
-      Get.offAll(const SessionDetails(), arguments: {'yearSession': yearSession,
+      Get.to(const SessionDetails(), arguments: {'yearSession': yearSession,
       'faculty': faculty
       });
       print('Request succeeded!');
