@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:key_app/main_controller.dart';
-import 'package:key_app/ui/course_questions/course_questions.dart';
-import 'package:key_app/ui/courses/courses_controller.dart';
 import 'package:key_app/ui/interviews/interviews_controller.dart';
 import 'package:key_app/utils/const_colors.dart';
+import 'package:key_app/utils/shared_preferance/shared_preferance.dart';
+import 'package:key_app/widget/custom-shimmer-widget.dart';
 import 'package:key_app/widget/custom_text.dart';
 import 'package:key_app/widget/drawer.dart';
 
@@ -44,13 +44,13 @@ class Interviews extends GetView<InterviewsController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CustomText(
-                                text: "أطفال 1",
+                                text: SaveDateInSharedPreference.getSubjectName(),
                                 fontSize: 20.h,
                                 bold: true,
                                 alignment: AlignmentDirectional.center,
                                 textColor: MainController.themeData.value.dividerColor),
                             CustomText(
-                                text: "المقابلات (8)",
+                                text: "المقابلات (${controller.interviews.length})",
                                 fontSize: 15.h,
                                 marginTop: 8.h,
                                 alignment: AlignmentDirectional.center,
@@ -58,24 +58,59 @@ class Interviews extends GetView<InterviewsController> {
                           ],
                         ),
                       ],),),
-                  //  SizedBox(height: 15.h,),
+
+                  // Expanded(
+                  //   child: SingleChildScrollView(
+                  //       child:  Container(
+                  //           padding: EdgeInsetsDirectional.only(top: 8.h, bottom: 15.h),
+                  //           child: Column(
+                  //             children: [
+                  //               interviewItem('دورة 2020 - 2021, الفصل الأول', context, '50', '10/6/2020'),
+                  //               interviewItem('دورة 2020 - 2021, الفصل الثاني', context, '8','10/6/2020'),
+                  //               interviewItem('دورة 2021 - 2022, الفصل الأول', context, '10', '10/6/2020'),
+                  //               interviewItem('دورة 2021 -2022, الفصل الثاني', context, '15', '10/6/2020'),
+                  //               interviewItem('دورة 2020 - 2021, الفصل الأول', context, '50', '10/6/2020'),
+                  //               interviewItem('دورة 2020 - 2021, الفصل الأول', context, '50', '10/6/2020'),
+                  //               interviewItem('دورة 2020 - 2021, الفصل الأول', context, '50', '10/6/2020')
+                  //             ],
+                  //           ))
+                  //   ),
+                  // ),
+                  controller.isLoading.value?
                   Expanded(
-                    child: SingleChildScrollView(
-                        child:  Container(
-                            padding: EdgeInsetsDirectional.only(top: 8.h, bottom: 15.h),
-                            child: Column(
-                              children: [
-                                interviewItem('دورة 2020 - 2021, الفصل الأول', context, '50', '10/6/2020'),
-                                interviewItem('دورة 2020 - 2021, الفصل الثاني', context, '8','10/6/2020'),
-                                interviewItem('دورة 2021 - 2022, الفصل الأول', context, '10', '10/6/2020'),
-                                interviewItem('دورة 2021 -2022, الفصل الثاني', context, '15', '10/6/2020'),
-                                interviewItem('دورة 2020 - 2021, الفصل الأول', context, '50', '10/6/2020'),
-                                interviewItem('دورة 2020 - 2021, الفصل الأول', context, '50', '10/6/2020'),
-                                interviewItem('دورة 2020 - 2021, الفصل الأول', context, '50', '10/6/2020')
-                              ],
-                            ))
+                    child: SizedBox(
+                      width: width,
+                      child: ListView.builder(
+                          itemCount: 8,
+                          itemBuilder: (context, index)=> ShimmerWidget(child: Container(
+                            height: 70.h,
+                            color: primaryColor,
+                            margin: EdgeInsetsDirectional.only(top: 12.h, bottom: 12.h),
+                          ))),
                     ),
-                  ),
+                  ):
+                  controller.interviews.isEmpty ?
+                  Expanded(
+                    child: CustomText(text: 'لم يتم إضافة مقابلات لهذه المادة بعد',
+                      textColor: MainController.themeData.value.indicatorColor,
+                      alignment: AlignmentDirectional.center,
+                    ),
+                  )
+                      : Expanded(
+                    child: SizedBox(
+                      width: width,
+                      child: ListView.builder(
+                          itemCount: controller.interviews.length,
+                          padding: EdgeInsetsDirectional.only(top: 8.h, bottom: 8.h),
+                          itemBuilder: (context, index)=>
+                              // courseItem(
+                              //     'دورة ${controller.courses[index].name}, ${controller.session}',
+                              //     context, controller.courses[index].questionCount)
+                          interviewItem('دورة ${controller.interviews[index].name}, ${controller.session}',
+                           context, controller.interviews[index].questionCount)
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -83,7 +118,7 @@ class Interviews extends GetView<InterviewsController> {
       ),
     );
   }
-  Widget interviewItem(String? title, BuildContext context, String? questionNo, String? date) {
+  Widget interviewItem(String? title, BuildContext context, int? questionNo) {
     final width = MediaQuery.of(context).size.width;
     return InkWell(
       overlayColor:MaterialStateColor.resolveWith((states) => Colors.transparent),
@@ -120,15 +155,6 @@ class Interviews extends GetView<InterviewsController> {
                         textColor: MainController.themeData.value.indicatorColor),
 
                   ],),
-
-                const Spacer(),
-                Align(
-                  child: CustomText(
-                      text: "$date",
-                      fontSize: 18.h,
-                      marginEnd: 12.w,
-                      textColor: MainController.themeData.value.indicatorColor),
-                ),
               ],
             ),
              Divider(thickness: 0.8,color: MainController.themeData.value.indicatorColor.withOpacity(0.5))

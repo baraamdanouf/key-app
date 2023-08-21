@@ -29,7 +29,8 @@ class SessionsController extends GetxController {
   {
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     deviceId = androidInfo.androidId;
-    print('Running on ${androidInfo.androidId}');
+    SaveDateInSharedPreference.setDeviceId(deviceId);
+    print('Running on $deviceId');
   }
 
   Future<List<FacultyYearModel>> fetchFacultyYears(int id) async {
@@ -55,9 +56,9 @@ class SessionsController extends GetxController {
 
     if (response.statusCode == 200) {
       // Request succeeded
-      Get.to(const SessionDetails(), arguments: {'yearSession': yearSession,
-      'faculty': faculty
-      });
+      Get.offAll(const SessionDetails());
+      SaveDateInSharedPreference.setYearSessionName(yearSession);
+      SaveDateInSharedPreference.setFacultyName(faculty);
       print('Request succeeded!');
 
     } else {

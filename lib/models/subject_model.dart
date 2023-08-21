@@ -1,21 +1,20 @@
-class SubjectModel {
-  SubjectModel({
-    this.success,
-    this.data,
-  });
-
-  bool? success;
-  List<Subject>? data;
-
-  factory SubjectModel.fromJson(Map<String, dynamic> json) =>
-      SubjectModel(
-        success: json["success"],
-        // data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-        data: (json['data'] as List<dynamic>)
-            .map((e) => Subject.fromJson(e as Map<String, dynamic>))
-            .toList(),
-      );
-}
+// class SubjectModel {
+//   SubjectModel({
+//     this.success,
+//     this.data,
+//   });
+//
+//   bool? success;
+//   List<Subject>? data;
+//
+//   factory SubjectModel.fromJson(Map<String, dynamic> json) =>
+//       SubjectModel(
+//         success: json["success"],
+//         data: (json['data'] as List<dynamic>)
+//             .map((e) => Subject.fromJson(e as Map<String, dynamic>))
+//             .toList(),
+//       );
+// }
 
 class Subject {
   Subject({
@@ -34,7 +33,7 @@ class Subject {
   int? semester;
   String? description;
   int? faculty;
-  String? courseData;
+  List<CourseData>? courseData;
 
   factory Subject.fromJson(Map<String, dynamic> json) => Subject(
     subjectId: json["subject_id"],
@@ -42,11 +41,9 @@ class Subject {
     year: json["year"],
     semester: json["semester"],
     description: json["description"],
-    courseData: json["course_data"]
-    // (jsonDecode(json['course_data']) as List<dynamic>)
-    //     .map((e) => CourseData.fromJson(e as Map<String, dynamic>))
-    //     .toList(),
-  );
+    courseData: (json['course_data'] as List<dynamic>)
+      .map((e) => CourseData.fromJson(e as Map<String, dynamic>)).toList()
+    );
 }
 
 class CourseData {

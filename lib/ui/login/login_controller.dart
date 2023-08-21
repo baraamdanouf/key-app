@@ -49,12 +49,12 @@ class LoginController extends GetxController {
     if (response.statusCode == 200) {
       // Request succeeded
       Get.offAll(const Home());
-      print('Request succeeded!');
+     // print('Request succeeded!');
 
     } else {
       // Request failed
       ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
-      print('Request failed with status code: ${response.statusCode}');
+     // print('Request failed with status code: ${response.statusCode}');
     }
   }
 

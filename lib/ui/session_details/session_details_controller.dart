@@ -2,26 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:key_app/models/subject_model.dart';
 import 'package:key_app/services/remote_services.dart';
-import 'package:key_app/utils/shared_preferance/shared_preferance.dart';
 
 class SessionDetailsController extends GetxController {
   final GlobalKey<ScaffoldState> sessionDetailsKey = GlobalKey<ScaffoldState>();
 
-  RxList<SubjectModel> facultyYears = RxList<SubjectModel>([]);
+  RxList<Subject> subjects = RxList<Subject>([]);
+  int? courseCount = 0;
+  int? bankCount = 0;
+  int? interviewCount = 0;
   RxBool isLoading = true.obs;
 
   @override
   void onInit() async{
     super.onInit();
-    //set your device id
-    await fetchUserSubjects('106b633aa6fc3a2f');
+    await fetchUserSubjects();
   }
 
-  Future<List<SubjectModel>> fetchUserSubjects(String deviceId) async {
-    List<dynamic> data = await getUserSubjects(deviceId);
-    facultyYears.value = data.map((json) => SubjectModel.fromJson(json)).toList();
+  Future<List<Subject>> fetchUserSubjects() async {
+    List<dynamic> data = await getUserSubjects();
+    subjects.value = data.map((json) => Subject.fromJson(json)).toList();
     isLoading.value = false;
-    return facultyYears;
+
+    for (var element in subjects) {
+      for(var item in element.courseData!)
+        {
+          if(item.type == 1)
+            {
+              courseCount = item.courseCount;
+            }
+          else if(item.type == 2)
+            {
+              bankCount = item.courseCount;
+            }
+          else if(item.type == 3)
+            {
+              interviewCount = item.courseCount;
+            }
+        }
+    }
+    return subjects;
   }
 
   @override

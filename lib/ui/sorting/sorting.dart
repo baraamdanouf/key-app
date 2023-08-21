@@ -6,6 +6,8 @@ import 'package:key_app/main_controller.dart';
 import 'package:key_app/ui/sort_questions/sort_questions.dart';
 import 'package:key_app/ui/sorting/sorting_controller.dart';
 import 'package:key_app/utils/const_colors.dart';
+import 'package:key_app/utils/shared_preferance/shared_preferance.dart';
+import 'package:key_app/widget/custom-shimmer-widget.dart';
 import 'package:key_app/widget/custom_text.dart';
 import 'package:key_app/widget/drawer.dart';
 
@@ -43,13 +45,13 @@ class Sorting extends GetView<SortingController> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 CustomText(
-                                    text: "أطفال 1",
+                                    text: SaveDateInSharedPreference.getSubjectName(),
                                     fontSize: 20.h,
                                     bold: true,
                                     alignment: AlignmentDirectional.center,
                                     textColor: MainController.themeData.value.dividerColor),
                                 CustomText(
-                                    text: "التصنيفات (8)",
+                                    text: "التصنيفات (${controller.tags.length})",
                                     fontSize: 15.h,
                                     marginTop: 8.h,
                                     alignment: AlignmentDirectional.center,
@@ -57,25 +59,39 @@ class Sorting extends GetView<SortingController> {
                               ],
                             ),
                           ],),),
-                    //  SizedBox(height: 15.h,),
-                       Expanded(
-                         child: SingleChildScrollView(
-                           child:  Container(
-                                 padding: EdgeInsetsDirectional.only(top: 8.h, bottom: 15.h),
-                                child: Column(
-                                  children: [
-                                    sortItem('اللقاحات', context, '50', '10'),
-                                    sortItem('اللقاحات', context, '50', '10'),
-                                    sortItem('اللقاحات', context, '50', '10'),
-                                    sortItem('اللقاحات', context, '50', '10'),
-                                    sortItem('اللقاحات', context, '50', '10'),
-                                    sortItem('اللقاحات', context, '50', '10'),
-                                    sortItem('اللقاحات', context, '50', '10'),
-                                    sortItem('اللقاحات', context, '50', '10')
-                                  ],
-                                ))
-                              ),
-                         ),
+                      controller.isLoading.value?
+                      Expanded(
+                        child: SizedBox(
+                          width: width,
+                          child: ListView.builder(
+                              itemCount: 8,
+                              itemBuilder: (context, index)=> ShimmerWidget(child: Container(
+                                height: 70.h,
+                                color: primaryColor,
+                                margin: EdgeInsetsDirectional.only(top: 12.h, bottom: 12.h),
+                              ))),
+                        ),
+                      ):
+                      controller.tags.isEmpty ?
+                      Expanded(
+                        child: CustomText(text: 'لم يتم إضافة تصنيفات لهذه المادة بعد',
+                          textColor: MainController.themeData.value.indicatorColor,
+                          alignment: AlignmentDirectional.center,
+                        ),
+                      )
+                          : Expanded(
+                        child: SizedBox(
+                          width: width,
+                          child: ListView.builder(
+                              itemCount: controller.tags.length,
+                              padding: EdgeInsetsDirectional.only(top: 8.h, bottom: 8.h),
+                              itemBuilder: (context, index)=>
+                                  tagItem(
+                                      controller.tags[index].name,
+                                      context, controller.tags[index].name, 'jjj')
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -83,7 +99,7 @@ class Sorting extends GetView<SortingController> {
       ),
     );
   }
-  Widget sortItem(String? title, BuildContext context, String? questionNo, String? bankNo) {
+  Widget tagItem(String? title, BuildContext context, String? questionNo, String? bankNo) {
     final width = MediaQuery.of(context).size.width;
     return InkWell(
       overlayColor:MaterialStateColor.resolveWith((states) => Colors.transparent),
@@ -109,25 +125,25 @@ class Sorting extends GetView<SortingController> {
                         marginBottom: 12.h,
                         marginTop: 8.h,
                         textColor: MainController.themeData.value.indicatorColor),
-                    Row(children: [
-                      CustomText(
-                          text: 'عدد أسئلة الدورات :',
-                          fontSize: 15.h,
-                          textColor: MainController.themeData.value.indicatorColor),
-                      CustomText(
-                          text: '$questionNo',
-                          fontSize: 15.h,
-                          textColor: MainController.themeData.value.indicatorColor),
-                      CustomText(
-                          text: 'عدد أسئلة البنوك :',
-                          fontSize: 15.h,
-                          marginStart: 8.h,
-                          textColor: MainController.themeData.value.indicatorColor),
-                      CustomText(
-                          text: '$bankNo',
-                          fontSize: 15.h,
-                          textColor: MainController.themeData.value.indicatorColor),
-                    ],)
+                    // Row(children: [
+                    //   CustomText(
+                    //       text: 'عدد أسئلة الدورات :',
+                    //       fontSize: 15.h,
+                    //       textColor: MainController.themeData.value.indicatorColor),
+                    //   CustomText(
+                    //       text: '$questionNo',
+                    //       fontSize: 15.h,
+                    //       textColor: MainController.themeData.value.indicatorColor),
+                    //   CustomText(
+                    //       text: 'عدد أسئلة البنوك :',
+                    //       fontSize: 15.h,
+                    //       marginStart: 8.h,
+                    //       textColor: MainController.themeData.value.indicatorColor),
+                    //   CustomText(
+                    //       text: '$bankNo',
+                    //       fontSize: 15.h,
+                    //       textColor: MainController.themeData.value.indicatorColor),
+                    // ],)
                   ],),
                 const Spacer(),
                 Center(

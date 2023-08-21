@@ -3,23 +3,24 @@ import 'package:get/get.dart';
 import 'package:key_app/models/course_model.dart';
 import 'package:key_app/services/remote_services.dart';
 
-class InterviewsController extends GetxController {
-  final GlobalKey<ScaffoldState> interviewsKey = GlobalKey<ScaffoldState>();
+class BanksController extends GetxController {
+  final GlobalKey<ScaffoldState> banksKey = GlobalKey<ScaffoldState>();
 
-  RxList<CourseModel> interviews = RxList<CourseModel>([]);
+  RxList<CourseModel> banks = RxList<CourseModel>([]);
   RxBool isLoading = true.obs;
   String session = '';
+
   @override
-  void onInit() {
+  void onInit() async{
     super.onInit();
-    fetchCourses();
+    await fetchCourses();
   }
 
   Future<List<CourseModel>> fetchCourses() async {
-    List<dynamic> data = await getCourses(3);
-    interviews.value = data.map((json) => CourseModel.fromJson(json)).toList();
+    List<dynamic> data = await getCourses(2);
+    banks.value = data.map((json) => CourseModel.fromJson(json)).toList();
     isLoading.value = false;
-    for(var item in interviews)
+    for(var item in banks)
     {
       if(item.subject == 1)
       {
@@ -30,7 +31,7 @@ class InterviewsController extends GetxController {
         session = 'الفصل الثاني';
       }
     }
-    return interviews;
+    return banks;
   }
 
   @override

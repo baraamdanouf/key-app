@@ -52,13 +52,13 @@ class CourseDetails extends GetView<CourseDetailsController> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CustomText(
-                                  text: "أطفال 1",
+                                  text: SaveDateInSharedPreference.getSubjectName(),
                                   fontSize: 20.h,
                                   bold: true,
                                   alignment: AlignmentDirectional.center,
                                   textColor: MainController.themeData.value.dividerColor),
                               CustomText(
-                                  text: "السنة الخامسة - الفصل الأول",
+                                  text: SaveDateInSharedPreference.getYearSessionName(),
                                   fontSize: 15.h,
                                   marginTop: 8.h,
                                   alignment: AlignmentDirectional.center,

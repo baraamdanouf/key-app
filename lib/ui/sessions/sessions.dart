@@ -151,7 +151,7 @@ class Sessions extends GetView<SessionsController> {
                   CustomButton(
                     onPressed: () async{
                       print(sessionId);
-                    await controller.registerUser(sessionId, yearSession!);
+                     await controller.registerUser(sessionId, yearSession!);
                     },
                     text: "موافق",
                     textColor: Colors.black,

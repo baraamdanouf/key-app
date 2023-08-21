@@ -91,10 +91,10 @@ class Login extends GetView<LoginController> {
                         if (!isValid) {
                           return;
                         } else {
-                          await controller.checkCode(controller.controllerCode.text);
+                         await  controller.checkCode(controller.controllerCode.text);
                           SaveDateInSharedPreference.setToken(controller.controllerCode.text);
                           SaveDateInSharedPreference.setUserName(controller.controllerName.text);
-                          print(controller.controllerCode.text);
+                        //  print(controller.controllerCode.text);
                         }
                         controller.loginFormKey.currentState!.save();
                       },

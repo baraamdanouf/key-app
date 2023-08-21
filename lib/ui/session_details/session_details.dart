@@ -6,6 +6,9 @@ import 'package:ionicons/ionicons.dart';
 import 'package:key_app/main_controller.dart';
 import 'package:key_app/ui/course_details/course_details.dart';
 import 'package:key_app/ui/session_details/session_details_controller.dart';
+import 'package:key_app/utils/const_colors.dart';
+import 'package:key_app/utils/shared_preferance/shared_preferance.dart';
+import 'package:key_app/widget/custom-shimmer-widget.dart';
 import 'package:key_app/widget/custom_text.dart';
 import 'package:key_app/widget/drawer.dart';
 
@@ -49,13 +52,13 @@ class SessionDetails extends GetView<SessionDetailsController> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     CustomText(
-                                        text: "${Get.arguments['yearSession']}",
+                                        text: SaveDateInSharedPreference.getYearSessionName(),
                                         fontSize: 20.h,
                                         bold: true,
                                         alignment: AlignmentDirectional.center,
                                         textColor: MainController.themeData.value.dividerColor),
                                     CustomText(
-                                        text: "كلية ${Get.arguments['faculty']} - جامعة حلب",
+                                        text: "كلية ${SaveDateInSharedPreference.getFacultyName()} - جامعة حلب",
                                         fontSize: 15.h,
                                         marginTop: 8.h,
                                         alignment: AlignmentDirectional.center,
@@ -64,13 +67,43 @@ class SessionDetails extends GetView<SessionDetailsController> {
                                 ),
                               ],),),
                           SizedBox(height: 8.h,),
-                          courseItem('أطفال 1','10/6/2020', context) ,
-                          courseItem('أمراض العين وجراحتها','10/6/2020', context),
-                          courseItem('الأمراض النسائية','10/6/2020', context) ,
-                          courseItem('الطب الوقائي','10/6/2020', context),
-                          courseItem('جراحة عصبية وبولية','10/6/2020', context) ,
-                          courseItem('داخلية عصبية','10/6/2020', context)
-
+                          controller.isLoading.value?
+                          Expanded(
+                            child: SizedBox(
+                              width: width,
+                              child: ListView.builder(
+                                  itemCount: 8,
+                                  itemBuilder: (context, index)=> ShimmerWidget(child: Container(
+                                    height: 70.h,
+                                    color: primaryColor,
+                                    margin: EdgeInsetsDirectional.only(top: 12.h, bottom: 12.h),
+                                  ))),
+                            ),
+                          ):
+                          controller.subjects.isEmpty ?
+                              Expanded(
+                                child: CustomText(text: 'لم يتم إضافة مواد بعد',
+                                  textColor: MainController.themeData.value.indicatorColor,
+                                  alignment: AlignmentDirectional.center,
+                                ),
+                              )
+                            : Expanded(
+                            child: SizedBox(
+                              width: width,
+                              child: ListView.builder(
+                                  itemCount: controller.subjects.length,
+                                  padding: EdgeInsetsDirectional.only(top: 8.h, bottom: 8.h),
+                                  itemBuilder: (context, index)=>
+                                  courseItem(
+                                      controller.subjects[index].subjectId,
+                                      controller.subjects[index].name,
+                                      controller.courseCount,
+                                      controller.bankCount,
+                                      controller.interviewCount,
+                                      context)
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -79,11 +112,17 @@ class SessionDetails extends GetView<SessionDetailsController> {
       ),
     );
   }
-  Widget courseItem(String? course, String? date , BuildContext context) {
+  Widget courseItem(int? subjectId, String? course, int? courseCount, int? bankCount,
+      int? interviewCount, BuildContext context) {
+
     final width = MediaQuery.of(context).size.width;
     return InkWell(
       overlayColor:MaterialStateColor.resolveWith((states) => Colors.transparent),
-      onTap: (){Get.to(const CourseDetails());},
+      onTap: (){
+        Get.to(const CourseDetails());
+        SaveDateInSharedPreference.setSubjectId(subjectId.toString());
+        SaveDateInSharedPreference.setSubjectName(course!);
+        },
       child: SizedBox(
           width: width,
           child:
@@ -98,7 +137,6 @@ class SessionDetails extends GetView<SessionDetailsController> {
                         child: Icon(Ionicons.library_outline, color: MainController.themeData.value.hintColor, size: 35.h,)
                       ),
                     ),
-
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,21 +151,21 @@ class SessionDetails extends GetView<SessionDetailsController> {
                       Row(children: [
                         Icon(Ionicons.document_outline, color: MainController.themeData.value.hintColor, size: 18.h,),
                         CustomText(
-                            text: '9',
+                            text: '$courseCount',
                             fontSize: 15.h,
                             marginEnd: 8.h,
                             marginStart: 8.h,
                             textColor: MainController.themeData.value.indicatorColor),
                         Icon(Ionicons.briefcase_outline, color: MainController.themeData.value.hintColor, size: 18.h,),
                         CustomText(
-                            text: '14',
+                            text: '$bankCount',
                             fontSize: 15.h,
                             marginEnd: 8.h,
                             marginStart: 8.h,
                             textColor: MainController.themeData.value.indicatorColor),
                         Icon(Ionicons.newspaper_outline, color: MainController.themeData.value.hintColor, size: 18.h,),
                         CustomText(
-                            text: '14',
+                            text: '$interviewCount',
                             fontSize: 15.h,
                             marginEnd: 8.h,
                             marginStart: 8.h,
@@ -135,13 +173,6 @@ class SessionDetails extends GetView<SessionDetailsController> {
                       ],)
                     ],),
                   const Spacer(),
-                  Align(
-                    child: CustomText(
-                        text: "$date",
-                        fontSize: 18.h,
-                        marginEnd: 12.w,
-                        textColor: MainController.themeData.value.indicatorColor),
-                  ),
                 ],
               ),
                Divider(thickness: 0.8,color: MainController.themeData.value.indicatorColor.withOpacity(0.5))

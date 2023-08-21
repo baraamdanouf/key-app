@@ -6,6 +6,8 @@ import 'package:key_app/main_controller.dart';
 import 'package:key_app/ui/course_questions/course_questions.dart';
 import 'package:key_app/ui/courses/courses_controller.dart';
 import 'package:key_app/utils/const_colors.dart';
+import 'package:key_app/utils/shared_preferance/shared_preferance.dart';
+import 'package:key_app/widget/custom-shimmer-widget.dart';
 import 'package:key_app/widget/custom_text.dart';
 import 'package:key_app/widget/drawer.dart';
 
@@ -21,7 +23,8 @@ class Courses extends GetView<CoursesController> {
     return Scaffold(
         key: controller.coursesKey,
         drawer: Drawer(child: drawer()),
-        body: Obx(()=> SafeArea(
+        body:
+        Obx(()=> SafeArea(
             child: SizedBox(
               width: width,
               child: Column(
@@ -44,13 +47,13 @@ class Courses extends GetView<CoursesController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CustomText(
-                                text: "أطفال 1",
+                                text: SaveDateInSharedPreference.getSubjectName(),
                                 fontSize: 20.h,
                                 bold: true,
                                 alignment: AlignmentDirectional.center,
                                 textColor: MainController.themeData.value.dividerColor),
                             CustomText(
-                                text: "الدورات (8)",
+                                text: "الدورات (${controller.courses.length})",
                                 fontSize: 15.h,
                                 marginTop: 8.h,
                                 alignment: AlignmentDirectional.center,
@@ -58,24 +61,39 @@ class Courses extends GetView<CoursesController> {
                           ],
                         ),
                       ],),),
-                  //  SizedBox(height: 15.h,),
+                  controller.isLoading.value?
                   Expanded(
-                    child: SingleChildScrollView(
-                        child:  Container(
-                            padding: EdgeInsetsDirectional.only(top: 8.h, bottom: 15.h),
-                            child: Column(
-                              children: [
-                                sortItem('دورة 2020 - 2021, الفصل الأول', context, '50'),
-                                sortItem('دورة 2020 - 2021, الفصل الثاني', context, '8'),
-                                sortItem('دورة 2021 - 2022, الفصل الأول', context, '10'),
-                                sortItem('دورة 2021 -2022, الفصل الثاني', context, '15'),
-                                sortItem('دورة 2020 - 2021, الفصل الأول', context, '50'),
-                                sortItem('دورة 2020 - 2021, الفصل الأول', context, '50'),
-                                sortItem('دورة 2020 - 2021, الفصل الأول', context, '50')
-                              ],
-                            ))
+                    child: SizedBox(
+                      width: width,
+                      child: ListView.builder(
+                          itemCount: 8,
+                          itemBuilder: (context, index)=> ShimmerWidget(child: Container(
+                            height: 70.h,
+                            color: primaryColor,
+                            margin: EdgeInsetsDirectional.only(top: 12.h, bottom: 12.h),
+                          ))),
                     ),
-                  ),
+                  ):
+                  controller.courses.isEmpty ?
+                  Expanded(
+                    child: CustomText(text: 'لم يتم إضافة دورات لهذه المادة بعد',
+                      textColor: MainController.themeData.value.indicatorColor,
+                      alignment: AlignmentDirectional.center,
+                    ),
+                  )
+                  : Expanded(
+                    child: SizedBox(
+                      width: width,
+                      child: ListView.builder(
+                          itemCount: controller.courses.length,
+                          padding: EdgeInsetsDirectional.only(top: 8.h, bottom: 8.h),
+                          itemBuilder: (context, index)=>
+                          courseItem(
+                            'دورة ${controller.courses[index].name}, ${controller.session}',
+                             context, controller.courses[index].questionCount, controller.courses[index].id.toString())
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -83,12 +101,15 @@ class Courses extends GetView<CoursesController> {
         )
     );
   }
-  Widget sortItem(String? title, BuildContext context, String? questionNo) {
+  Widget courseItem(String? title, BuildContext context, int? questionNo, String? courseId) {
     final width = MediaQuery.of(context).size.width;
     return InkWell(
       overlayColor:MaterialStateColor.resolveWith((states) => Colors.transparent),
       onTap: (){
-        Get.to(const CourseQuestions());
+        SaveDateInSharedPreference.setCourseId(courseId!);
+        print('this is ${SaveDateInSharedPreference.getCourseId()}');
+        print(courseId);
+        Get.to(const CourseQuestions(), arguments: {'courseName': title});
         },
       child: SizedBox(
         width: width,

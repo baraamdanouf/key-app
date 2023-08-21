@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:key_app/main_controller.dart';
+import 'package:key_app/ui/banks/banks.dart';
 import 'package:key_app/ui/courses/courses.dart';
 import 'package:key_app/ui/interviews/interviews.dart';
 import 'package:key_app/ui/main_page/main_page_controller.dart';
@@ -18,7 +19,7 @@ class MainPage extends GetView<MainPageController> {
   Widget build(BuildContext context) {
     const screens = [
       Courses(),
-      Center(child: Text('h3'),),
+      Banks(),
       Sorting(),
       Interviews()
     ];
